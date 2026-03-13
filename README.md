@@ -1,127 +1,159 @@
-# Lagos Real Estate Market Analysis
+# Lagos Real Estate Intelligence — Web Scraping & Investment Analysis
 
-**Live Dashboard**: [View on Tableau Public](https://public.tableau.com/app/profile/najib.njidda/viz/LAGOSREALESTATEMARKETANALYSIS/Dashboard1?publish=yes)
+**Live Dashboard:** [View on Tableau Public](https://public.tableau.com/app/profile/najib.njidda/viz/LAGOSREALESTATEMARKETANALYSIS/Dashboard1?publish=yes)
+
+**Data source:** Nigeria Property Centre — 1,993 properties scraped, cleaned, and analysed across Lagos State.
+
+---
+
+## Overview
+
+Lagos real estate data is fragmented and unreliable. If you want to know whether ₦500 million is a fair price for a property in Lekki, or what the typical rent is for a three-bedroom in Ikoyi, there is no straightforward way to find out. Buyers rely on agents, investors rely on hearsay, and renters have no reference point at all.
+
+This project addresses that gap. Using Python to scrape live property listings from Nigeria Property Centre, followed by three rounds of data cleaning and a full Tableau dashboard, it delivers a data-driven picture of the Lagos property market — pricing benchmarks, investment yields, bedroom demand, and geographic concentration — across the city's major neighbourhoods.
+
+The headline finding: investment returns vary by a factor of 30 within the same city, from 9.3% annual yield in Ibeju Lekki to 0.3% in Ikorodu.
 
 ---
 
 ## What This Project Is About
 
-I built an interactive dashboard that analyzes 1,993 properties across Lagos to help investors, buyers, and renters make smarter real estate decisions. I scraped property listings from Nigeria Property Centre, cleaned the messy data, and created visualizations that reveal some pretty interesting investment patterns.
+This is an end-to-end data project — from web scraping raw property listings to building an interactive dashboard that answers real investment questions. The goal was to replace guesswork with data in a market where most people make six and seven figure decisions based on what their agent tells them or what they heard from friends.
 
-The main finding? Investment returns vary wildly across Lagos - from 9.3% yields in Ibeju Lekki to 0.3% in Ikorodu. That's a 30x difference in the same city.
+The project covers the full pipeline: automated data collection using Python, three rounds of cleaning to produce a reliable dataset, and a Tableau dashboard with 11 visualisations covering pricing benchmarks, investment yields, bedroom demand, and geographic concentration across Lagos.
+
+---
+## Dashboard Preview
+
+![Lagos Real Estate Dashboard Overview](https://raw.githubusercontent.com/najeebullahii/Lagos-real-estate-analysis/main/assets/dashboard_overview.png)
+
+*The full interactive dashboard is available on Tableau Public. The screenshot above shows the investment opportunity scatter plot, KPI metrics, and area-level price comparisons.*
 
 ---
 
-## Why I Built This
+## Business Questions Answered
 
-I got interested in this project because Lagos real estate data is all over the place. If you want to know whether ₦500M is a fair price for a property in Lekki, or what the typical rent is for a 3-bedroom in Ikoyi, there's no easy way to find out. Everyone just relies on what their agent tells them or what they've heard from friends.
+The analysis was structured around three distinct user types:
 
-I wanted to see if I could gather actual data and find patterns that would be useful for real decisions. Plus, I wanted to challenge myself with an end-to-end project - from web scraping to data cleaning to building something interactive.
+**For investors**
+- Which areas deliver the strongest rental yield?
+- Where does purchase price outpace rental income to the point of making investment impractical?
+- How does the overall market compare in terms of sale-to-rent ratio?
 
----
+**For buyers**
+- Is the asking price for a property in a given area reasonable relative to the market?
+- What is the typical price range for a four-bedroom property in Lekki versus Ikoyi?
 
-## The Business Questions
-
-Here's what I tried to answer:
-
-**Investment questions:**
-- Which areas give you the best rental ROI?
-- Where should you definitely not invest?
-- What's the overall state of the market?
-
-**Buyer questions:**
-- Is the price I'm seeing reasonable for this area?
-- What's the typical price range for 4-bedroom properties in Lekki?
-
-**Renter questions:**
-- Am I getting a fair deal on rent?
-- What should I expect to pay for a 3-bedroom in different areas?
+**For renters**
+- What should a three-bedroom apartment in Yaba or Maryland realistically cost?
+- Which areas offer the best value for rental accommodation?
 
 ---
 
-## What I Found
+## Key Findings
 
-The data revealed some interesting patterns:
+**Best investment areas by annual rental yield:**
 
-**Best investment areas** (based on rental yield):
-1. Ibeju Lekki - 9.3% annual yield
-2. Yaba - 9.1% annual yield  
-3. Maryland - 5.2% annual yield
+| Rank | Area | Annual Yield |
+|---|---|---|
+| 1 | Ibeju Lekki | 9.3% |
+| 2 | Yaba | 9.1% |
+| 3 | Maryland | 5.2% |
 
-**Areas to avoid**:
-1. Ikorodu - 0.3% yield (it would take 322 years of rent to pay back the purchase price!)
-2. Surulere - 1.1% yield
-3. Agege - 1.3% yield
+**Areas with the weakest investment case:**
 
-**Market overview**:
-- 1,993 properties analyzed (1,144 for sale, 687 for rent)
-- Average sale price: ₦580M
-- Average annual rent: ₦15M
-- Lekki completely dominates with 47% of all listings
-
-**Surprising insight**: Ikoyi has the highest average sale price (₦1.66B) but one of the worst yields (2.2%). Expensive doesn't mean profitable.
-
----
-
-## How I Built This
-
-### Data Collection
-
-I scraped 2,138 property listings from Nigeria Property Centre using Python (Playwright and BeautifulSoup). The scraper pulled titles, prices, and addresses for properties across Lagos.
-
-### Data Cleaning
-
-The raw data was messy, prices in different currencies, inconsistent formatting, clear outliers. I ended up doing 3 separate cleaning rounds:
-
-**Round 1 - Feature Engineering**
-- Extracted bedroom counts and property types from listing titles using regex
-- Broke down addresses into neighborhood, area, and state
-- Standardized all prices to Naira
-- Categorized each listing as Sale, Rent, or Short Let
-
-**Round 2 - Outlier Removal**
-- Removed obvious mislabeled data (like "sales" under ₦2M that were clearly rentals)
-- Filtered out commercial properties and unrealistic bedroom counts
-- Focused only on Lagos State
-
-**Round 3 - Final Quality Control**
-- Removed extreme rental outliers that would skew the analysis
-- This made a huge difference, the maximum rent dropped from ₦1.5 billion to ₦50 million
-- Average rent went from ₦23M to ₦15M (35% more accurate)
-- Final dataset: 1,993 properties (removed 145 outliers total)
-
-### Dashboard Creation
-
-Built everything in Tableau with 11 different visualizations:
-- KPI metrics showing market overview
-- Bar charts comparing top areas by price
-- Bedroom demand analysis
-- Investment opportunity scatter plot
-- Dual-axis chart showing both price-to-rent ratios and yields
-
-I used LOD (Level of Detail) expressions to calculate area-level metrics like average prices and rental yields.
+| Rank | Area | Annual Yield | Years to break even |
+|---|---|---|---|
+| 1 | Ikorodu | 0.3% | 322 years |
+| 2 | Surulere | 1.1% | 91 years |
+| 3 | Agege | 1.3% | 77 years |
 
 ---
 
 ## Key Insights
 
-**Geographic inequality is massive**. A 30x difference in investment returns within the same city tells you that location is everything. Property type and size matter far less than where you're buying.
+**Geographic inequality is the dominant story.** A 30x difference in investment returns within a single city tells you that location matters far more than property type or size. Two properties with identical bedrooms and finishes can have completely different investment cases depending on which side of Lagos they sit on.
 
-**Premium areas aren't always profitable**. Ikoyi properties are expensive, but the rental yields are mediocre. You're paying for prestige, not cash flow.
+**Premium pricing does not guarantee strong returns.** Ikoyi commands the highest average sale price in the dataset at ₦1.66 billion, yet delivers only 2.2% annual yield. Buyers in that market are paying for prestige and address, not cash flow. Investors chasing returns should be looking at Ibeju Lekki and Yaba instead.
 
-**The market is concentrated**. Lekki has almost half of all listings. This could mean high demand, or it could mean the market is oversaturated. Would need sales velocity data to know for sure.
+**The market is heavily concentrated.** Lekki accounts for nearly half of all listings in the dataset. Whether this reflects genuine demand depth or an oversaturated supply is a question the listing data alone cannot answer — sales velocity and time-on-market data would be needed to draw that conclusion with confidence.
+
+**Data cleaning changed the story significantly.** Before the final round of outlier removal, average annual rent appeared to be ₦23 million. After removing statistical outliers, it corrected to ₦15 million — a 35% shift. This underscores how sensitive market averages are to extreme values, and why cleaning decisions need to be documented and justified rather than hidden.
 
 ---
 
-## Technical Details
+**Market overview:**
 
-**Tools used:**
-- Web scraping: Python with Playwright and BeautifulSoup
-- Data cleaning: Pandas
-- Analysis & visualization: Tableau Desktop/Public
-- Version control: Git and GitHub
+- 1,993 properties analysed — 1,144 for sale, 687 for rent
+- Average sale price: ₦580 million
+- Average annual rent: ₦15 million
+- Lekki accounts for 47% of all listings
 
-**Python libraries:**
+**Notable insight:** Ikoyi carries the highest average sale price at ₦1.66 billion but delivers only 2.2% annual yield — one of the weakest in the dataset. The premium reflects prestige, not cash flow.
+
+**Geographic concentration:** A single neighbourhood — Lekki — dominates nearly half of all listings. Whether this reflects genuine demand or market oversaturation cannot be determined from listing data alone; sales velocity data would be required to draw that conclusion.
+
+---
+
+## How It Was Built
+
+### Data Collection
+
+2,138 property listings were scraped from Nigeria Property Centre using Python with Playwright and BeautifulSoup. The scraper extracted listing titles, prices, and addresses for residential properties across Lagos State.
+
+### Data Cleaning
+
+The raw dataset required three rounds of cleaning to produce an analysis-ready file.
+
+| Round | Focus | Key Actions |
+|---|---|---|
+| Round 1 | Feature engineering | Extracted bedroom counts and property types from titles using regex. Decomposed addresses into neighbourhood, area, and state. Standardised all prices to Nigerian Naira. Categorised listings as Sale, Rent, or Short Let. |
+| Round 2 | Outlier removal | Removed mislabelled listings — sale prices under ₦2 million that were clearly rentals. Filtered out commercial properties and implausible bedroom counts. Restricted dataset to Lagos State only. |
+| Round 3 | Quality control | Removed extreme rental outliers that would distort area-level averages. Maximum rent dropped from ₦1.5 billion to ₦50 million. Average rent corrected from ₦23 million to ₦15 million — a 35% improvement in accuracy. Final count: 1,993 properties after removing 145 outliers. |
+
+### Dashboard Construction
+
+The Tableau dashboard contains 11 visualisations:
+
+- KPI summary cards for market-level metrics
+- Bar charts comparing top neighbourhoods by average sale and rental price
+- Bedroom demand distribution analysis
+- Investment opportunity scatter plot mapping yield against average price
+- Dual-axis chart combining price-to-rent ratios with annual yields
+
+Level of Detail (LOD) expressions were used throughout to calculate area-level aggregates — average prices, rental yields, and price-to-rent ratios — independently of the visualisation's own level of aggregation.
+
+---
+
+## Project Structure
+```
+Lagos-real-estate-analysis/
+├── assets/                        # Screenshots and dashboard images
+├── dashboard/                     # Tableau workbook file
+├── data/
+│   ├── raw/                       # Original scraped data
+│   └── cleaned/                   # Analysis-ready dataset
+├── scripts/
+│   ├── web_scraping.py            # Playwright + BeautifulSoup scraper
+│   └── Lagos_data_cleaning.py     # Three-round cleaning pipeline
+├── .gitignore
+├── LICENSE
+├── README.md
+└── requirements.txt
+```
+
+---
+
+## Technology Stack
+
+| Component | Technology |
+|---|---|
+| Web scraping | Python — Playwright, BeautifulSoup |
+| Data cleaning | Python — Pandas |
+| Analysis and visualisation | Tableau Desktop / Tableau Public |
+| Version control | Git and GitHub |
+
+**Python library versions:**
 ```
 pandas==2.0.3
 playwright==1.40.0
@@ -130,48 +162,51 @@ beautifulsoup4==4.12.2
 
 ---
 
-## Running the Code
+## Running the Code Locally
 
-If you want to run this yourself:
-
-1. Clone the repo
-2. Install dependencies: `pip install -r requirements.txt`
-3. Install Playwright browsers: `playwright install chromium`
-4. Run the scraper: `python scripts/web_scraping.py` (optional - data is already included)
-5. Clean the data: `python scripts/Lagos_data_cleaning.py`
-6. Open the Tableau dashboard or view it on [Tableau Public](https://public.tableau.com/app/profile/najib.njidda/viz/LAGOSREALESTATEMARKETANALYSIS/Dashboard1?publish=yes)
-
----
+1. Clone the repository
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Install Playwright browsers:
+```bash
+playwright install chromium
+```
+4. Run the scraper (optional — cleaned data is already included):
+```bash
+python scripts/web_scraping.py
+```
+5. Run the cleaning pipeline:
+```bash
+python scripts/Lagos_data_cleaning.py
+```
+6. Open the Tableau dashboard locally or view the live version on [Tableau Public](https://public.tableau.com/app/profile/najib.njidda/viz/LAGOSREALESTATEMARKETANALYSIS/Dashboard1?publish=yes)
 
 ---
 
 ## Limitations
 
-A few things to keep in mind:
+This analysis is intentionally transparent about what the data cannot tell us:
 
-- This is a snapshot from one point in time, not a time series
-- Only includes listed properties, not actual sales data
-- Can't verify if listings are real or just aspirational pricing
-- No information on how long properties stay on the market
-- Missing context like neighborhood amenities, crime rates, schools, etc.
+- The dataset represents a single point in time, not a longitudinal price trend
+- Only listed properties are included — actual transaction prices from the land registry would be more reliable
+- There is no way to verify whether listings reflect genuine market prices or aspirational asking prices
+- Time-on-market data is unavailable, making it impossible to assess demand or liquidity
+- Contextual factors — neighbourhood amenities, infrastructure quality, crime rates, proximity to schools — are not captured
 
-For a more complete analysis, I'd want to track listings over time and combine this with actual transaction data from the land registry.
-
----
+A more complete analysis would track listings over time, incorporate land registry transaction data, and combine property-level data with neighbourhood-level socioeconomic indicators.
 
 ---
 
 ## License
 
-MIT License - feel free to use this code for your own projects.
+MIT License — free to use and adapt for your own projects.
 
 ---
 
-## Acknowledgments
+## Data Source
 
-Data source: [Nigeria Property Centre](https://nigeriapropertycentre.com/)
-
-
----
+Nigeria Property Centre: [nigeriapropertycentre.com](https://nigeriapropertycentre.com)
 
 *Last updated: February 2026*
